@@ -1,8 +1,6 @@
 package gov.dane.sige.web.cabb.util.ags;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import gov.dane.sige.web.cabb.util.common.ByteStreamUtil;
 
 import org.json.JSONObject;
 import org.restlet.data.MediaType;
@@ -51,7 +49,7 @@ public class AGSQueryUtil {
 		ClientResource rcli = new ClientResource(queryURL + "/query?" + qps);
 		Representation rp = rcli.get();
 		if (rp != null && MediaType.TEXT_PLAIN.isCompatible(rp.getMediaType())) {
-			byte[] data = getStreamBytes(rp.getStream());
+			byte[] data = ByteStreamUtil.getStreamBytes(rp.getStream());
 			queryResult = new JSONObject(new String(data));
 		}
 		rcli.release();
@@ -161,34 +159,5 @@ public class AGSQueryUtil {
 
 		target.put(Params.time.name(), "");
 		target.put(Params.geometryType.name(), "");
-	}
-
-	/**
-	 * Performs bytes retrieval from input stream <br/>
-	 * (this is a really general purpose method)
-	 * 
-	 * @param inputStream
-	 * @return bytes retrieved from inputStream
-	 * @throws Exception
-	 */
-	private static byte[] getStreamBytes(InputStream inputStream)
-			throws Exception {
-
-		int len;
-		int size = 1024;
-		byte[] buf;
-
-		if (inputStream instanceof ByteArrayInputStream) {
-			size = inputStream.available();
-			buf = new byte[size];
-			len = inputStream.read(buf, 0, size);
-		} else {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			buf = new byte[size];
-			while ((len = inputStream.read(buf, 0, size)) != -1)
-				bos.write(buf, 0, len);
-			buf = bos.toByteArray();
-		}
-		return buf;
 	}
 }
