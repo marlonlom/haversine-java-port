@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>CensusAreasBuilder</display-name>
+	<context-param>
+		<param-name>app.indicator_source</param-name>
+		<param-value>/WEB-INF/config/app.properties</param-value>
+	</context-param>
+	<welcome-file-list>
+		<welcome-file>/WEB-INF/jsp/main.jsp</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<description></description>
+		<display-name>AGSQueryHandlerServlet</display-name>
+		<servlet-name>AGSQueryHandlerServlet</servlet-name>
+		<servlet-class>gov.dane.sige.web.cabb.servlets.AGSQueryHandlerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AGSQueryHandlerServlet</servlet-name>
+		<url-pattern>/arcgis_query</url-pattern>
+	</servlet-mapping>
+</web-app>
